@@ -21,6 +21,7 @@ public class QuestionController {
     @Autowired
     private ResponseDTO responseDTO;
 
+    //Create a Question
     @PostMapping(value = "/saveQuestion") // api/v1/question/saveQuestion
     public ResponseEntity saveQuestion(@RequestBody QuestionDTO questionDto){
         try{
@@ -49,7 +50,8 @@ public class QuestionController {
     }
 
 
-    @GetMapping(value = "/getAllquestions")
+    //Get all the questions
+    @GetMapping(value = "/getAllQuestions")
     public ResponseEntity getAllQuestions(){
         try {
             List<QuestionDTO> questioinDtoList = questionService.getAllQuestions();
@@ -64,6 +66,23 @@ public class QuestionController {
             responseDTO.setMessage("bad request");
             responseDTO.setContent(null);
 
+            return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    //Get question by category
+    @GetMapping(value="/getAllQuestionsByCategory/category/{category}")
+    public ResponseEntity getQuestionsByCategory(@PathVariable String category){
+        try{
+            List<QuestionDTO> questionDTOList = questionService.getAllQuestionsByCateogry(category);
+            responseDTO.setCode(VarList.RSP_SUCCESS);
+            responseDTO.setMessage("success");
+            responseDTO.setContent(questionDTOList);
+            return new ResponseEntity(responseDTO, HttpStatus.ACCEPTED);
+        }catch(Exception ex){
+            responseDTO.setCode(VarList.RSP_ERROR);
+            responseDTO.setMessage("error");
+            responseDTO.setContent(null);
             return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
         }
     }

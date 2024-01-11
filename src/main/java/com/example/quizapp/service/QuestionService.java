@@ -39,4 +39,8 @@ public class QuestionService {
         return modelMapper.map(questionList, new TypeToken<ArrayList<QuestionDTO>>(){}.getType());
     }
 
+    public List<QuestionDTO> getAllQuestionsByCateogry(String category) {
+        List<Question> questionList =  questionRepo.findByCategory(category);
+        return modelMapper.map(questionList, new TypeToken<ArrayList<QuestionDTO>>(){}.getType());
+    }
 }
