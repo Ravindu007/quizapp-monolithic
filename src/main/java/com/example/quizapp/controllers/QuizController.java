@@ -1,6 +1,7 @@
 package com.example.quizapp.controllers;
 
 import com.example.quizapp.dto.ResponseDTO;
+import com.example.quizapp.entity.Answer;
 import com.example.quizapp.entity.Question;
 import com.example.quizapp.entity.QuestionWrapper;
 import com.example.quizapp.repo.QuizRepo;
@@ -54,6 +55,12 @@ public class QuizController {
     @GetMapping("/get/{id}")
     public ResponseEntity<List<QuestionWrapper>> getQuizQuestions(@PathVariable Integer id){
         return quizService.getQuizQuestions(id);
+    }
+
+    //handle the response coming from the frontend
+    @PostMapping("/submit/{id}")
+    public ResponseEntity<Integer> submitQuiz(@PathVariable Integer id, @RequestBody List<Answer> answers){
+        return quizService.calculateResult(id,answers);
     }
 }
 

@@ -1,5 +1,6 @@
 package com.example.quizapp.service;
 
+import com.example.quizapp.entity.Answer;
 import com.example.quizapp.entity.Question;
 import com.example.quizapp.entity.QuestionWrapper;
 import com.example.quizapp.entity.Quiz;
@@ -56,6 +57,21 @@ public class QuizService {
         }
 
         return new ResponseEntity<>(questionsForUsers, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Integer> calculateResult(Integer id, List<Answer> answers) {
+        Optional<Quiz> quiz = quizRepo.findById(id);
+        List<Question> questions = quiz.get().getQuestions();
+
+        int right = 0;
+        int i = 0;
+        for(Answer answer : answers){
+            if(answer.getResponse().equals(questions.get(i).getRightAnswer()))
+                right++;
+
+            i++;
+        }
+        return new ResponseEntity<>(right, HttpStatus.OK);
     }
 }
 
