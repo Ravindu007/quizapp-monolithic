@@ -1,16 +1,17 @@
 package com.example.quizapp.controllers;
 
 import com.example.quizapp.dto.ResponseDTO;
+import com.example.quizapp.entity.Question;
+import com.example.quizapp.entity.QuestionWrapper;
 import com.example.quizapp.repo.QuizRepo;
 import com.example.quizapp.service.QuizService;
 import com.example.quizapp.util.VarList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/quiz")
@@ -48,7 +49,16 @@ public class QuizController {
             return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
         }
     }
+
+    //get quiz by id
+    @GetMapping("/get/{id}")
+    public ResponseEntity<List<QuestionWrapper>> getQuizQuestions(@PathVariable Integer id){
+        return quizService.getQuizQuestions(id);
+    }
 }
+
+
+
 
 
 
