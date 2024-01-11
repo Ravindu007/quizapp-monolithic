@@ -86,4 +86,33 @@ public class QuestionController {
             return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
         }
     }
+
+
+    //update a question
+    @PutMapping(value = "/updateQuestion")
+    public ResponseEntity updateQuestion(@RequestBody QuestionDTO questionDto){
+        try{
+            String res = questionService.updateQuestion(questionDto);
+
+            if(res.equals("00")){
+                responseDTO.setCode(VarList.RSP_SUCCESS);
+                responseDTO.setMessage("success");
+                responseDTO.setContent(questionDto);
+
+                return new ResponseEntity(responseDTO, HttpStatus.ACCEPTED);
+            }else{
+                responseDTO.setCode(VarList.RSP_ERROR);
+                responseDTO.setMessage("error");
+                responseDTO.setContent(null);
+
+                return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
+            }
+        }catch(Exception ex){
+            responseDTO.setCode(VarList.RSP_ERROR);
+            responseDTO.setMessage("error");
+            responseDTO.setContent(null);
+
+            return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
+        }
+    }
 }

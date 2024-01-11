@@ -43,4 +43,14 @@ public class QuestionService {
         List<Question> questionList =  questionRepo.findByCategory(category);
         return modelMapper.map(questionList, new TypeToken<ArrayList<QuestionDTO>>(){}.getType());
     }
+
+
+    public String updateQuestion(QuestionDTO questionDto) {
+        if(questionRepo.existsById(questionDto.getId())){
+            questionRepo.save(modelMapper.map(questionDto, Question.class));
+            return VarList.RSP_SUCCESS;
+        }else{
+            return  VarList.RSP_NO_DATA_FOUND;
+        }
+    }
 }
