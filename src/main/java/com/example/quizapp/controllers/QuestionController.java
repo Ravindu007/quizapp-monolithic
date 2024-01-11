@@ -115,4 +115,34 @@ public class QuestionController {
             return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
         }
     }
+
+
+    //delete a question
+    @DeleteMapping(value="/deleteQuestion/{questionId}")
+    public ResponseEntity deleteQuestion(@PathVariable Integer questionId){
+        try{
+
+            String res = questionService.deleteQuestionById(questionId);
+
+            if(res.equals("00")){
+                responseDTO.setCode(VarList.RSP_SUCCESS);
+                responseDTO.setMessage("success");
+                responseDTO.setContent(null);
+
+                return new ResponseEntity(responseDTO, HttpStatus.ACCEPTED);
+            }else{
+                responseDTO.setCode(VarList.RSP_ERROR);
+                responseDTO.setMessage("error");
+                responseDTO.setContent(null);
+
+                return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
+            }
+        }catch(Exception ex){
+            responseDTO.setCode(VarList.RSP_ERROR);
+            responseDTO.setMessage("error");
+            responseDTO.setContent(null);
+
+            return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
+        }
+    }
 }

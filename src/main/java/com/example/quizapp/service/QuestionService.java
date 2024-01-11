@@ -53,4 +53,13 @@ public class QuestionService {
             return  VarList.RSP_NO_DATA_FOUND;
         }
     }
+
+    public String deleteQuestionById(Integer questionId) {
+        if(questionRepo.existsById(questionId)){
+            questionRepo.deleteById(questionId);
+            return VarList.RSP_SUCCESS;
+        }else{
+            return VarList.RSP_NO_DATA_FOUND;
+        }
+    }
 }
